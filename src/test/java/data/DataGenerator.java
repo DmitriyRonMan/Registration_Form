@@ -29,13 +29,4 @@ public class DataGenerator {
         return fakerLangEn.internet().password();
     }
 
-
-    @Data
-    @AllArgsConstructor
-    public static class FormInfo {
-        private String lastName;
-        private String name;
-        private String email;
-        private String password;
-    }
 }
