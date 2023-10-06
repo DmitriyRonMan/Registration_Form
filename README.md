@@ -1,7 +1,7 @@
 # Тестовое задание «Автоматизация формы регистрации»
 
 ## Документация
-- [Отчёт о проведённом тестировании]()
+- [Отчёт о проведённом тестировании](https://github.com/DmitriyRonMan/Registration_Form/blob/main/docs/Report.md)
 
 ## Начало работы
 
@@ -16,7 +16,7 @@
 
 Склонировать репозиторий на свой рабочий стол
 ```
-git clone 
+git clone git@github.com:DmitriyRonMan/Registration_Form.git
 ```
 
 Открыть проект в IntelliJ IDEA
