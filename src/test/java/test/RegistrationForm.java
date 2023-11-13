@@ -1,5 +1,7 @@
 package test;
 
+import Page.MainPage;
+import Page.RegistrationPage;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
@@ -13,6 +15,8 @@ import static com.codeborne.selenide.Selenide.*;
 
 
 public class RegistrationForm {
+    private MainPage mainPage;
+    private RegistrationPage registrationPage;
 
 
     private SelenideElement lastNameField = $("[name='name']");
@@ -34,7 +38,8 @@ public class RegistrationForm {
     @BeforeEach
     void setUp() {
         open("https://tms.biacorp.ru/");
-        $$("button").find(Condition.text("Зарегистрироваться")).click();
+        mainPage = new MainPage();
+        registrationPage = mainPage.goToRegPage();
     }
 
     /*для проверки поля "Фамилия"*/
@@ -42,8 +47,7 @@ public class RegistrationForm {
     @DisplayName("Ввод данных в поле 'Фамилия' на кириллице в диапазоне от 3 до 60 символов.")
     void shouldTestTheLastNameField1() {
 
-        lastNameField.sendKeys(DataGenerator.getLastName());
-        $(byText("Значение поля фамилия, может содержать только русские буквы")).shouldHave(Condition.not(Condition.visible));
+        registrationPage.getLastNameFrom3To60();
     }
 
     @Test
