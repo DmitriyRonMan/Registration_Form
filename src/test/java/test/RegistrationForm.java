@@ -1,5 +1,6 @@
 package test;
 
+import Page.AuthorizationPage;
 import Page.MainPage;
 import Page.RegistrationPage;
 import com.codeborne.selenide.Condition;
@@ -17,13 +18,7 @@ import static com.codeborne.selenide.Selenide.*;
 public class RegistrationForm {
     private MainPage mainPage;
     private RegistrationPage registrationPage;
-
-
-    private SelenideElement lastNameField = $("[name='name']");
-    private SelenideElement nameField = $("[name='surname']");
-    private SelenideElement emailField = $("[name='email']");
-    private SelenideElement passwordField = $("[name='password']");
-    private SelenideElement buttonContinue = $("[type='submit'].css-yhxv9x");
+    private AuthorizationPage authorizationPage;
 
     @BeforeAll
     static void setUpAll() {
@@ -47,15 +42,16 @@ public class RegistrationForm {
     @DisplayName("Ввод данных в поле 'Фамилия' на кириллице в диапазоне от 3 до 60 символов.")
     void shouldTestTheLastNameField1() {
 
-        registrationPage.getLastNameFrom3To60();
+        registrationPage.getARandomLastName();
+        registrationPage.setErrorMessageForTheLastNameFieldWithRuLetters();
     }
 
     @Test
     @DisplayName("Ввод данных в поле 'Фамилия' на кириллице в кол-ве 2 символов.")
     void shouldTestTheLastNameField2() {
 
-        lastNameField.setValue("Ян");
-        $(byText("Значение поля фамилия, должно содержать не меньше 1 буквы и не больше 64 букв")).shouldHave(Condition.not(Condition.visible));
+        registrationPage.getLastNameFromString("Ян");
+        registrationPage.setErrorMessageForTheLastNameFieldFromIntervalFrom1To64();
     }
 
     @Test
@@ -64,16 +60,16 @@ public class RegistrationForm {
 
         Configuration.holdBrowserOpen = true;
 
-        lastNameField.setValue("Аййильцикликирмицибайрактазийонкаграманоглувуарвтсдпнуывьстрлфуо");
-        $(byText("Значение поля фамилия, должно содержать не меньше 1 буквы и не больше 64 букв")).shouldHave(Condition.not(Condition.visible));
+        registrationPage.getLastNameFromString("Аййильцикликирмицибайрактазийонкаграманоглувуарвтсдпнуывьстрлфуо");
+        registrationPage.setErrorMessageForTheLastNameFieldFromIntervalFrom1To64();
     }
 
     @Test
     @DisplayName("Ввод данных в поле 'Фамилия', содержащие букву 'ё'.")
     void shouldTestTheLastNameField4() {
 
-        lastNameField.setValue("Алёхин");
-        $(byText("Значение поля фамилия, может содержать только русские буквы")).shouldHave(Condition.not(Condition.visible));
+        registrationPage.getLastNameFromString("Алёхин");
+        registrationPage.setErrorMessageForTheLastNameFieldWithRuLetters();
     }
 
     @Test
@@ -82,8 +78,8 @@ public class RegistrationForm {
 
         Configuration.holdBrowserOpen = true;
 
-        lastNameField.setValue("Римский-Корсаков");
-        $(byText("Значение поля фамилия, может содержать только русские буквы")).shouldHave(Condition.not(Condition.visible));
+        registrationPage.getLastNameFromString("Римский-Корсаков");
+        registrationPage.setErrorMessageForTheLastNameFieldWithRuLetters();
     }
 
     @Test
@@ -92,8 +88,8 @@ public class RegistrationForm {
 
         Configuration.holdBrowserOpen = true;
 
-        lastNameField.setValue("Дэвис Джексон");
-        $(byText("Значение поля фамилия, может содержать только русские буквы")).shouldHave(Condition.not(Condition.visible));
+        registrationPage.getLastNameFromString("Дэвис Джексон");
+        registrationPage.setErrorMessageForTheLastNameFieldWithRuLetters();
     }
 
 
@@ -102,18 +98,18 @@ public class RegistrationForm {
     @DisplayName("Ввод данных в поле 'Имя' на кириллице в диапазоне от 3 до 60 символов.")
     void shouldTestTheNameField1() {
 
-        lastNameField.sendKeys(DataGenerator.getLastName());
-        nameField.sendKeys(DataGenerator.getName());
-        $(byText("Значение поля фамилия, может содержать только русские буквы")).shouldHave(Condition.not(Condition.visible));
+        registrationPage.getARandomLastName();
+        registrationPage.getARandomName();
+        registrationPage.setErrorMessageForTheNameFieldWithRuLetters();
     }
 
     @Test
     @DisplayName("Ввод данных в поле 'Имя' на кириллице в кол-ве 2 символов.")
     void shouldTestTheNameField2() {
 
-        lastNameField.sendKeys(DataGenerator.getLastName());
-        nameField.setValue("Ки");
-        $(byText("Значение поля имя, должно содержать не меньше 1 буквы и не больше 64 букв")).shouldHave(Condition.not(Condition.visible));
+        registrationPage.getARandomLastName();
+        registrationPage.getNameFromString("Ки");
+        registrationPage.setErrorMessageForTheNameFieldFromIntervalFrom1To64();
     }
 
     @Test
@@ -122,18 +118,18 @@ public class RegistrationForm {
 
         Configuration.holdBrowserOpen = true;
 
-        lastNameField.sendKeys(DataGenerator.getLastName());
-        nameField.setValue("Аййильцикликирмицибайрактазийонкаграманоглувуарвтсдпнуывьстрлфуо");
-        $(byText("Значение поля имя, должно содержать не меньше 1 буквы и не больше 64 букв")).shouldHave(Condition.not(Condition.visible));
+        registrationPage.getARandomLastName();
+        registrationPage.getNameFromString("Аййильцикликирмицибайрактазийонкаграманоглувуарвтсдпнуывьстрлфуо");
+        registrationPage.setErrorMessageForTheNameFieldFromIntervalFrom1To64();
     }
 
     @Test
     @DisplayName("Ввод данных в поле 'Имя' на кириллице, содержащие букву 'ё'.")
     void shouldTestTheNameField4() {
 
-        lastNameField.sendKeys(DataGenerator.getLastName());
-        nameField.setValue("Пётр");
-        $(byText("Значение поля фамилия, может содержать только русские буквы")).shouldHave(Condition.not(Condition.visible));
+        registrationPage.getARandomLastName();
+        registrationPage.getNameFromString("Пётр");
+        registrationPage.setErrorMessageForTheNameFieldWithRuLetters();
     }
 
     @Test
@@ -141,9 +137,9 @@ public class RegistrationForm {
     void shouldTestTheNameField5() {
         Configuration.holdBrowserOpen = true;
 
-        lastNameField.sendKeys(DataGenerator.getLastName());
-        nameField.setValue("Жак-Ив");
-        $(byText("Значение поля имя, может содержать только русские буквы")).shouldHave(Condition.not(Condition.visible));
+        registrationPage.getARandomLastName();
+        registrationPage.getNameFromString("Жак-Ив");
+        registrationPage.setErrorMessageForTheNameFieldWithRuLetters();
     }
 
     @Test
@@ -151,113 +147,106 @@ public class RegistrationForm {
     void shouldTestTheNameField6() {
         Configuration.holdBrowserOpen = true;
 
-        lastNameField.sendKeys(DataGenerator.getLastName());
-        nameField.setValue("Каролина Елена");
-        $(byText("Значение поля имя, может содержать только русские буквы")).shouldHave(Condition.not(Condition.visible));
+        registrationPage.getARandomLastName();
+        registrationPage.getNameFromString("Каролина Елена");
+        registrationPage.setErrorMessageForTheNameFieldWithRuLetters();
     }
-
 
     /*для проверки поля "E-mail"*/
     @Test
     @DisplayName("Ввод данных в поле 'E-mail' на латинице, содержащих в себе цифры.")
     void shouldTestTheEmailField1() {
 
-        lastNameField.sendKeys(DataGenerator.getLastName());
-        nameField.sendKeys(DataGenerator.getName());
-        emailField.setValue("vladivostok2000@rbk.ru");
-        $(byText("Значение поля email, не соответствует формату почты")).shouldHave(Condition.not(Condition.visible));
+        registrationPage.getARandomLastName();
+        registrationPage.getARandomName();
+        registrationPage.getEmailFromString("vladivostok2000@rbk.ru");
+        registrationPage.setErrorMessageFormatEmail();
     }
 
     @Test
     @DisplayName("Ввод данных в поле 'E-mail' на латинице, где имя почтового ящика состоит из 2 символов.")
     void shouldTestTheEmailField2() {
 
-        lastNameField.sendKeys(DataGenerator.getLastName());
-        nameField.sendKeys(DataGenerator.getName());
-        emailField.setValue("np@mail.ru");
-        $(byText("Значение поля email, не соответствует формату почты")).shouldHave(Condition.not(Condition.visible));
+        registrationPage.getARandomLastName();
+        registrationPage.getARandomName();
+        registrationPage.getEmailFromString("np@mail.ru");
+        registrationPage.setErrorMessageFormatEmail();
     }
 
     @Test
     @DisplayName("Ввод данных в поле 'E-mail' на латинице, содержащих в себе дефис.")
     void shouldTestTheEmailField3() {
 
-        lastNameField.sendKeys(DataGenerator.getLastName());
-        nameField.sendKeys(DataGenerator.getName());
-        emailField.setValue("gagarin-space@yandex.ru");
-        $(byText("Значение поля email, не соответствует формату почты")).shouldHave(Condition.not(Condition.visible));
+        registrationPage.getARandomLastName();
+        registrationPage.getARandomName();
+        registrationPage.getEmailFromString("gagarin-space@yandex.ru");
+        registrationPage.setErrorMessageFormatEmail();
     }
 
     @Test
     @DisplayName("Ввод данных в поле 'E-mail' на латинице, где адрес электронной почты полностью в верхнем регистре.")
     void shouldTestTheEmailField4() {
 
-        lastNameField.sendKeys(DataGenerator.getLastName());
-        nameField.sendKeys(DataGenerator.getName());
-        emailField.setValue("HOME@YAHOO.COM");
-        $(byText("Значение поля email, не соответствует формату почты")).shouldHave(Condition.not(Condition.visible));
+        registrationPage.getARandomLastName();
+        registrationPage.getARandomName();
+        registrationPage.getEmailFromString("HOME@YAHOO.COM");
+        registrationPage.setErrorMessageFormatEmail();
     }
 
     @Test
     @DisplayName("Ввод данных в поле 'E-mail' на латинице, где имя почтового ящика содержит в себе символ '.' .")
     void shouldTestTheEmailField5() {
 
-        lastNameField.sendKeys(DataGenerator.getLastName());
-        nameField.sendKeys(DataGenerator.getName());
-        emailField.setValue("dog.cat@gmail.com");
-        $(byText("Значение поля email, не соответствует формату почты")).shouldHave(Condition.not(Condition.visible));
+        registrationPage.getARandomLastName();
+        registrationPage.getARandomName();
+        registrationPage.getEmailFromString("dog.cat@gmail.com");
+        registrationPage.setErrorMessageFormatEmail();
 
     }
 
 
-    /*для проверки поля "Пароль"*/
+    //для проверки поля "Пароль"
     @Test
     @DisplayName("Ввод данных в поле 'Пароль' на латинице, содержащие в себе: цифры, спец. символы, верх. и ниж. регистр.")
     void shouldTestThePasswordField1() {
 
-        lastNameField.sendKeys(DataGenerator.getLastName());
-        nameField.sendKeys(DataGenerator.getName());
-        emailField.sendKeys(DataGenerator.getEmail());
-        passwordField.setValue("PasswOrd19!");
-        $(byText("Недопустимый пароль. Пароль слишком простой.")).shouldHave(Condition.not(Condition.visible));
+        registrationPage.getARandomLastName();
+        registrationPage.getARandomName();
+        registrationPage.getARandomEmail();
+        registrationPage.getPasswordFromString("PasswOrd19!");
+        registrationPage.setErrorMessagePasswordLight();
     }
 
     @Test
     @DisplayName("Ввод данных в поле 'Пароль' на кириллице, содержащие в себе: цифры, спец. символы, верх. и ниж. регистр.")
     void shouldTestThePasswordField2() {
 
-        lastNameField.sendKeys(DataGenerator.getLastName());
-        nameField.sendKeys(DataGenerator.getName());
-        emailField.sendKeys(DataGenerator.getEmail());
-        passwordField.setValue("арТиК@12!");
-        $(byText("Недопустимый пароль. Пароль слишком простой.")).shouldHave(Condition.not(Condition.visible));
+        registrationPage.getARandomLastName();
+        registrationPage.getARandomName();
+        registrationPage.getARandomEmail();
+        registrationPage.getPasswordFromString("арТиК@12!");
+        registrationPage.setErrorMessagePasswordLight();
     }
 
 
-    /*для проверки перехода на форму "Вход"*/
+    //для проверки перехода на форму "Вход"
     @Test
     @DisplayName("Проверка перехода на форму 'Вход' по кнопке 'Вход'.")
     void shouldTestTheButton() {
         Configuration.holdBrowserOpen = true;
 
-        $("[type='button'].css-jq7zez").click();
-        $$("h2").find(Condition.text("Вход")).shouldHave(Condition.text("Вход"));
+        registrationPage.enterButtonAuth();
+        registrationPage.goToAuthPage();
     }
 
 
-    /*для проверки отправки формы "Регистрация"*/
+    //для проверки отправки формы "Регистрация"
     @Test
     @DisplayName("Регистрация пользователя с заполненными валидными данными.")
     void shouldTestRegistrationUser() {
 
-        Configuration.holdBrowserOpen = true;
-
-        lastNameField.sendKeys(DataGenerator.getLastName());
-        nameField.sendKeys(DataGenerator.getName());
-        emailField.sendKeys(DataGenerator.getEmail());
-        passwordField.sendKeys(DataGenerator.getPassword());
-        buttonContinue.click();
-        $(withText("Выберите вашу роль")).shouldHave(Condition.visible);
+        registrationPage.fillRegIngo(DataGenerator.getRegValidForm());
+        registrationPage.setChooseRole();
     }
 
 }

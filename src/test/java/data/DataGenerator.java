@@ -29,4 +29,18 @@ public class DataGenerator {
         return fakerLangEn.internet().password();
     }
 
+    public static RegInfo getRegValidForm() {
+
+        return new RegInfo(getLastName(), getName(), getEmail(), getPassword());
+    }
+
+    @Data
+    @AllArgsConstructor
+    public static class RegInfo {
+        private String lastName;
+        private String name;
+        private String email;
+        private String password;
+    }
+
 }
