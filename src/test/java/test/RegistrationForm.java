@@ -18,7 +18,6 @@ import static com.codeborne.selenide.Selenide.*;
 public class RegistrationForm {
     private MainPage mainPage;
     private RegistrationPage registrationPage;
-    private AuthorizationPage authorizationPage;
 
     @BeforeAll
     static void setUpAll() {
@@ -43,7 +42,7 @@ public class RegistrationForm {
     void shouldTestTheLastNameField1() {
 
         registrationPage.getARandomLastName();
-        registrationPage.setErrorMessageForTheLastNameFieldWithRuLetters();
+        registrationPage.setNotErrorMessageForTheLastNameFieldWithRuLetters();
     }
 
     @Test
@@ -51,7 +50,7 @@ public class RegistrationForm {
     void shouldTestTheLastNameField2() {
 
         registrationPage.getLastNameFromString("Ян");
-        registrationPage.setErrorMessageForTheLastNameFieldFromIntervalFrom1To64();
+        registrationPage.setNotErrorMessageForTheLastNameFieldFromIntervalFrom1To64();
     }
 
     @Test
@@ -61,7 +60,7 @@ public class RegistrationForm {
         Configuration.holdBrowserOpen = true;
 
         registrationPage.getLastNameFromString("Аййильцикликирмицибайрактазийонкаграманоглувуарвтсдпнуывьстрлфуо");
-        registrationPage.setErrorMessageForTheLastNameFieldFromIntervalFrom1To64();
+        registrationPage.setNotErrorMessageForTheLastNameFieldFromIntervalFrom1To64();
     }
 
     @Test
@@ -69,7 +68,7 @@ public class RegistrationForm {
     void shouldTestTheLastNameField4() {
 
         registrationPage.getLastNameFromString("Алёхин");
-        registrationPage.setErrorMessageForTheLastNameFieldWithRuLetters();
+        registrationPage.setNotErrorMessageForTheLastNameFieldWithRuLetters();
     }
 
     @Test
@@ -79,7 +78,7 @@ public class RegistrationForm {
         Configuration.holdBrowserOpen = true;
 
         registrationPage.getLastNameFromString("Римский-Корсаков");
-        registrationPage.setErrorMessageForTheLastNameFieldWithRuLetters();
+        registrationPage.setNotErrorMessageForTheLastNameFieldWithRuLetters();
     }
 
     @Test
@@ -89,7 +88,7 @@ public class RegistrationForm {
         Configuration.holdBrowserOpen = true;
 
         registrationPage.getLastNameFromString("Дэвис Джексон");
-        registrationPage.setErrorMessageForTheLastNameFieldWithRuLetters();
+        registrationPage.setNotErrorMessageForTheLastNameFieldWithRuLetters();
     }
 
 
@@ -100,16 +99,15 @@ public class RegistrationForm {
 
         registrationPage.getARandomLastName();
         registrationPage.getARandomName();
-        registrationPage.setErrorMessageForTheNameFieldWithRuLetters();
+        registrationPage.setNotErrorMessageForTheNameFieldWithRuLetters();
     }
 
     @Test
     @DisplayName("Ввод данных в поле 'Имя' на кириллице в кол-ве 2 символов.")
     void shouldTestTheNameField2() {
 
-        registrationPage.getARandomLastName();
-        registrationPage.getNameFromString("Ки");
-        registrationPage.setErrorMessageForTheNameFieldFromIntervalFrom1To64();
+        registrationPage.fillRegIngo(DataGenerator.getRegFormName("Ки"));
+        registrationPage.setNotErrorMessageForTheNameFieldFromIntervalFrom1To64();
     }
 
     @Test
@@ -118,18 +116,16 @@ public class RegistrationForm {
 
         Configuration.holdBrowserOpen = true;
 
-        registrationPage.getARandomLastName();
-        registrationPage.getNameFromString("Аййильцикликирмицибайрактазийонкаграманоглувуарвтсдпнуывьстрлфуо");
-        registrationPage.setErrorMessageForTheNameFieldFromIntervalFrom1To64();
+        registrationPage.fillRegIngo(DataGenerator.getRegFormName("Аййильцикликирмицибайрактазийонкаграманоглувуарвтсдпнуывьстрлфуо"));
+        registrationPage.setNotErrorMessageForTheNameFieldFromIntervalFrom1To64();
     }
 
     @Test
     @DisplayName("Ввод данных в поле 'Имя' на кириллице, содержащие букву 'ё'.")
     void shouldTestTheNameField4() {
 
-        registrationPage.getARandomLastName();
-        registrationPage.getNameFromString("Пётр");
-        registrationPage.setErrorMessageForTheNameFieldWithRuLetters();
+        registrationPage.fillRegIngo(DataGenerator.getRegFormName("Пётр"));
+        registrationPage.setNotErrorMessageForTheNameFieldWithRuLetters();
     }
 
     @Test
@@ -137,9 +133,8 @@ public class RegistrationForm {
     void shouldTestTheNameField5() {
         Configuration.holdBrowserOpen = true;
 
-        registrationPage.getARandomLastName();
-        registrationPage.getNameFromString("Жак-Ив");
-        registrationPage.setErrorMessageForTheNameFieldWithRuLetters();
+        registrationPage.fillRegIngo(DataGenerator.getRegFormName("Жак-Ив"));
+        registrationPage.setNotErrorMessageForTheNameFieldWithRuLetters();
     }
 
     @Test
@@ -147,9 +142,8 @@ public class RegistrationForm {
     void shouldTestTheNameField6() {
         Configuration.holdBrowserOpen = true;
 
-        registrationPage.getARandomLastName();
-        registrationPage.getNameFromString("Каролина Елена");
-        registrationPage.setErrorMessageForTheNameFieldWithRuLetters();
+        registrationPage.fillRegIngo(DataGenerator.getRegFormName("Каролина Елена"));
+        registrationPage.setNotErrorMessageForTheNameFieldWithRuLetters();
     }
 
     /*для проверки поля "E-mail"*/
@@ -157,50 +151,40 @@ public class RegistrationForm {
     @DisplayName("Ввод данных в поле 'E-mail' на латинице, содержащих в себе цифры.")
     void shouldTestTheEmailField1() {
 
-        registrationPage.getARandomLastName();
-        registrationPage.getARandomName();
-        registrationPage.getEmailFromString("vladivostok2000@rbk.ru");
-        registrationPage.setErrorMessageFormatEmail();
+        registrationPage.fillRegIngo(DataGenerator.getRegFormEmail("vladivostok2000@rbk.ru"));
+        registrationPage.setNotErrorMessageFormatEmail();
     }
 
     @Test
     @DisplayName("Ввод данных в поле 'E-mail' на латинице, где имя почтового ящика состоит из 2 символов.")
     void shouldTestTheEmailField2() {
 
-        registrationPage.getARandomLastName();
-        registrationPage.getARandomName();
-        registrationPage.getEmailFromString("np@mail.ru");
-        registrationPage.setErrorMessageFormatEmail();
+        registrationPage.fillRegIngo(DataGenerator.getRegFormEmail("np@mail.ru"));
+        registrationPage.setNotErrorMessageFormatEmail();
     }
 
     @Test
     @DisplayName("Ввод данных в поле 'E-mail' на латинице, содержащих в себе дефис.")
     void shouldTestTheEmailField3() {
 
-        registrationPage.getARandomLastName();
-        registrationPage.getARandomName();
-        registrationPage.getEmailFromString("gagarin-space@yandex.ru");
-        registrationPage.setErrorMessageFormatEmail();
+        registrationPage.fillRegIngo(DataGenerator.getRegFormEmail("gagarin-space@yandex.ru"));
+        registrationPage.setNotErrorMessageFormatEmail();
     }
 
     @Test
     @DisplayName("Ввод данных в поле 'E-mail' на латинице, где адрес электронной почты полностью в верхнем регистре.")
     void shouldTestTheEmailField4() {
 
-        registrationPage.getARandomLastName();
-        registrationPage.getARandomName();
-        registrationPage.getEmailFromString("HOME@YAHOO.COM");
-        registrationPage.setErrorMessageFormatEmail();
+        registrationPage.fillRegIngo(DataGenerator.getRegFormEmail("HOME@YAHOO.COM"));
+        registrationPage.setNotErrorMessageFormatEmail();
     }
 
     @Test
     @DisplayName("Ввод данных в поле 'E-mail' на латинице, где имя почтового ящика содержит в себе символ '.' .")
     void shouldTestTheEmailField5() {
 
-        registrationPage.getARandomLastName();
-        registrationPage.getARandomName();
-        registrationPage.getEmailFromString("dog.cat@gmail.com");
-        registrationPage.setErrorMessageFormatEmail();
+        registrationPage.fillRegIngo(DataGenerator.getRegFormEmail("dog.cat@gmail.com"));
+        registrationPage.setNotErrorMessageFormatEmail();
 
     }
 
@@ -210,22 +194,16 @@ public class RegistrationForm {
     @DisplayName("Ввод данных в поле 'Пароль' на латинице, содержащие в себе: цифры, спец. символы, верх. и ниж. регистр.")
     void shouldTestThePasswordField1() {
 
-        registrationPage.getARandomLastName();
-        registrationPage.getARandomName();
-        registrationPage.getARandomEmail();
-        registrationPage.getPasswordFromString("PasswOrd19!");
-        registrationPage.setErrorMessagePasswordLight();
+        registrationPage.fillRegIngo(DataGenerator.getRegFormPassword("PasswOrd19!"));
+        registrationPage.setNotErrorMessagePasswordLight();
     }
 
     @Test
     @DisplayName("Ввод данных в поле 'Пароль' на кириллице, содержащие в себе: цифры, спец. символы, верх. и ниж. регистр.")
     void shouldTestThePasswordField2() {
 
-        registrationPage.getARandomLastName();
-        registrationPage.getARandomName();
-        registrationPage.getARandomEmail();
-        registrationPage.getPasswordFromString("арТиК@12!");
-        registrationPage.setErrorMessagePasswordLight();
+        registrationPage.fillRegIngo(DataGenerator.getRegFormPassword("арТиК@12!"));
+        registrationPage.setNotErrorMessagePasswordLight();
     }
 
 
@@ -246,6 +224,7 @@ public class RegistrationForm {
     void shouldTestRegistrationUser() {
 
         registrationPage.fillRegIngo(DataGenerator.getRegValidForm());
+        registrationPage.enterButtonContinue();
         registrationPage.setChooseRole();
     }
 

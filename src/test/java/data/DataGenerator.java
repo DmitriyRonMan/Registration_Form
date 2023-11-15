@@ -34,6 +34,19 @@ public class DataGenerator {
         return new RegInfo(getLastName(), getName(), getEmail(), getPassword());
     }
 
+    public static RegInfo getRegFormPassword(String password) {
+        return new RegInfo(getLastName(), getName(), getEmail(), password);
+    }
+
+    public static RegInfo getRegFormEmail(String email) {
+        return new RegInfo(getLastName(), getName(), email, "");
+    }
+
+    public static RegInfo getRegFormName(String name) {
+        return new RegInfo(getLastName(), name, "", "");
+    }
+
+
     @Data
     @AllArgsConstructor
     public static class RegInfo {
