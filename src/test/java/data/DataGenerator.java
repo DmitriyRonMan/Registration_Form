@@ -46,6 +46,25 @@ public class DataGenerator {
         return new RegInfo(getLastName(), name, "", "");
     }
 
+    public static AuthInfo getAuthFormValid() {
+        return new AuthInfo("dimon-9_93@mail.ru", "asdf5771A!");
+    }
+
+    public static AuthInfo getAuthFormNoValidEmail() {
+        return new AuthInfo("", "fdsa5771A!");
+    }
+
+    public static AuthInfo getAuthFormNoValidPassword() {
+        return new AuthInfo("dimon-9_93@mail.ru", "");
+    }
+
+    public static AuthInfoPassword getAuthPasswordValidForm() {
+        return new AuthInfoPassword("dimon-9_93@mail.ru");
+    }
+
+    public static AuthInfoPassword getAuthPasswordNotValidForm() {
+        return new AuthInfoPassword("notAutorization@gmail.com");
+    }
 
     @Data
     @AllArgsConstructor
@@ -54,6 +73,19 @@ public class DataGenerator {
         private String name;
         private String email;
         private String password;
+    }
+
+    @Data
+    @AllArgsConstructor
+    public static class AuthInfo {
+        private String emailAuth;
+        private String passwordAuth;
+    }
+
+    @Data
+    @AllArgsConstructor
+    public static class AuthInfoPassword {
+        private String emailAuthPassword;
     }
 
 }
