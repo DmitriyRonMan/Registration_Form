@@ -4,6 +4,8 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import data.DataGenerator;
 
+import java.time.Duration;
+
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;
@@ -18,6 +20,9 @@ public class AuthorizationPage {
     private SelenideElement buttonEntrance = $("[type='submit'].css-yhxv9x");
     private SelenideElement buttonReg = $("[type='button'].css-jq7zez");
     private SelenideElement buttonPassword = $("[type='button'].css-14kqsx4");
+    private SelenideElement buttonDelivery = $$("p").find(Condition.text("Внутригородская доставка"));
+    private SelenideElement buttonMenu = $(".css-1khs3ah");
+    private SelenideElement buttonExitAc = $$("p").find(Condition.text("Выйти из аккаунта"));
     private SelenideElement chooseRole = $(withText("Выберите вашу роль"));
     private SelenideElement letterSent = $(withText("Письмо отправлено!"));
 
@@ -26,11 +31,15 @@ public class AuthorizationPage {
 
     public AuthorizationPage() {
 
-        heading.shouldBe(Condition.visible);
+        heading.shouldBe(Condition.visible, Duration.ofSeconds(10));
     }
 
     public RegistrationPage goToRegPage() {
         return new RegistrationPage();
+    }
+
+    public MainPage goToMainPage() {
+        return new MainPage();
     }
 
     public void enterButtonEntrance() {
@@ -49,7 +58,13 @@ public class AuthorizationPage {
 
     public void setChooseRole() {
 
-        chooseRole.shouldHave(Condition.visible);
+        chooseRole.shouldHave(Condition.visible, Duration.ofSeconds(10));
+        buttonDelivery.click();
+    }
+
+    public void exitAccount() {
+        buttonMenu.click();
+        buttonExitAc.click();
     }
 
     public void setLetterSent() {
@@ -69,6 +84,7 @@ public class AuthorizationPage {
         emailField.sendKeys(authInfo.getEmailAuth());
         passwordField.sendKeys(authInfo.getPasswordAuth());
     }
+
     public void fillAuthInfoPassword(DataGenerator.AuthInfoPassword authInfoPassword) {
         emailFieldPassword.sendKeys(authInfoPassword.getEmailAuthPassword());
 

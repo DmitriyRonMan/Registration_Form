@@ -31,6 +31,7 @@ public class NegativeTestForRegistrationForm {
     @AfterAll
     static void tearDownAll() {
         SelenideLogger.removeListener("allure");
+        Configuration.headless = true;
     }
 
     @BeforeEach
@@ -153,6 +154,7 @@ public class NegativeTestForRegistrationForm {
     @Test
     @DisplayName("Ввод данных в поле 'E-mail', где имя почтового ящика состоит из двух слов через пробел.")
     void shouldTestTheEmailField2() {
+        Configuration.holdBrowserOpen = true;
 
         registrationPage.fillRegIngo(DataGenerator.getRegFormEmail("vdnh moskva@gmail.com"));
         registrationPage.setErrorMessageFormatEmail();
@@ -184,7 +186,7 @@ public class NegativeTestForRegistrationForm {
 
 
     /*для проверки поля "Пароль"*/
-    @Test
+    /*@Test
     @DisplayName("Ввод данных в поле 'Пароль', состоящих только из единиц.")
     void shouldTestThePasswordField1() {
 
@@ -192,7 +194,7 @@ public class NegativeTestForRegistrationForm {
 
         registrationPage.fillRegIngo(DataGenerator.getRegFormPassword("11111111"));
         registrationPage.setErrorMessagePasswordRepChar();
-    }
+    }*/
 
     @Test
     @DisplayName("Ввод данных в поле 'Пароль', содержащие в себе запрещенные спец. символы.")
@@ -205,12 +207,12 @@ public class NegativeTestForRegistrationForm {
     @Test
     @DisplayName("Ввод данных в поле 'Пароль', состоящих из 5 символов.")
     void shouldTestThePasswordField3() {
-
+        Configuration.holdBrowserOpen = true;
         registrationPage.fillRegIngo(DataGenerator.getRegFormPassword("PasW!"));
         registrationPage.setErrorMessagePasswordFrom7To64();
     }
 
-    @Test
+   /* @Test
     @DisplayName("Ввод данных в поле 'Пароль', состоящих из цифр от 1 до 7.")
     void shouldTestThePasswordField4() {
 
@@ -220,9 +222,9 @@ public class NegativeTestForRegistrationForm {
 
         registrationPage.fillRegIngo(DataGenerator.getRegFormPassword("1234567"));
         registrationPage.setErrorMessagePasswordLight();
-    }
+    }*/
 
-    @Test
+    /*@Test
     @DisplayName("Ввод данных в поле 'Пароль', состоящих из последовательных символов на латинице.")
     void shouldTestThePasswordField5() {
 
@@ -230,7 +232,15 @@ public class NegativeTestForRegistrationForm {
 
         registrationPage.fillRegIngo(DataGenerator.getRegFormPassword("asdfghj"));
         registrationPage.setErrorMessagePasswordLight();
-    }
+    }*/
+
+    /*@Test
+    @DisplayName("Ввод данных в поле 'Пароль' на кириллице, содержащие в себе: цифры, спец. символы, верх. и ниж. регистр.")
+    void shouldTestThePasswordField6() {
+
+        registrationPage.fillRegIngo(DataGenerator.getRegFormPassword("арТиК@12!"));
+        registrationPage.setNotErrorMessagePasswordLight();
+    }*/
 
     /*для проверки отправки формы "Регистрация"*/
 

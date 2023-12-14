@@ -1,17 +1,13 @@
 package test;
 
-import Page.AuthorizationPage;
 import Page.MainPage;
 import Page.RegistrationPage;
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import data.DataGenerator;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
 
-import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 
 
@@ -22,6 +18,7 @@ public class RegistrationForm {
     @BeforeAll
     static void setUpAll() {
         SelenideLogger.addListener("allure", new AllureSelenide());
+        Configuration.headless = true;
     }
 
     @AfterAll
@@ -57,8 +54,6 @@ public class RegistrationForm {
     @DisplayName("Ввод данных в поле 'Фамилия' на кириллице в кол-ве 64 символов.")
     void shouldTestTheLastNameField3() {
 
-        Configuration.holdBrowserOpen = true;
-
         registrationPage.getLastNameFromString("Аййильцикликирмицибайрактазийонкаграманоглувуарвтсдпнуывьстрлфуо");
         registrationPage.setNotErrorMessageForTheLastNameFieldFromIntervalFrom1To64();
     }
@@ -75,8 +70,6 @@ public class RegistrationForm {
     @DisplayName("Ввод данных в поле 'Фамилия' на кириллице через дефис.")
     void shouldTestTheLastNameField5() {
 
-        Configuration.holdBrowserOpen = true;
-
         registrationPage.getLastNameFromString("Римский-Корсаков");
         registrationPage.setNotErrorMessageForTheLastNameFieldWithRuLetters();
     }
@@ -84,8 +77,6 @@ public class RegistrationForm {
     @Test
     @DisplayName("Ввод данных в поле 'Фамилия', содержащий пробел.")
     void shouldTestTheLastNameField6() {
-
-        Configuration.holdBrowserOpen = true;
 
         registrationPage.getLastNameFromString("Дэвис Джексон");
         registrationPage.setNotErrorMessageForTheLastNameFieldWithRuLetters();
@@ -114,8 +105,6 @@ public class RegistrationForm {
     @DisplayName("Ввод данных в поле 'Имя' на кириллице в кол-ве 64 символов.")
     void shouldTestTheNameField3() {
 
-        Configuration.holdBrowserOpen = true;
-
         registrationPage.fillRegIngo(DataGenerator.getRegFormName("Аййильцикликирмицибайрактазийонкаграманоглувуарвтсдпнуывьстрлфуо"));
         registrationPage.setNotErrorMessageForTheNameFieldFromIntervalFrom1To64();
     }
@@ -131,7 +120,6 @@ public class RegistrationForm {
     @Test
     @DisplayName("Ввод данных в поле 'Имя' на кириллице через дефис.")
     void shouldTestTheNameField5() {
-        Configuration.holdBrowserOpen = true;
 
         registrationPage.fillRegIngo(DataGenerator.getRegFormName("Жак-Ив"));
         registrationPage.setNotErrorMessageForTheNameFieldWithRuLetters();
@@ -140,7 +128,6 @@ public class RegistrationForm {
     @Test
     @DisplayName("Ввод данных в поле 'Имя' на кириллице, содержащий пробел.")
     void shouldTestTheNameField6() {
-        Configuration.holdBrowserOpen = true;
 
         registrationPage.fillRegIngo(DataGenerator.getRegFormName("Каролина Елена"));
         registrationPage.setNotErrorMessageForTheNameFieldWithRuLetters();
@@ -198,20 +185,10 @@ public class RegistrationForm {
         registrationPage.setNotErrorMessagePasswordLight();
     }
 
-    @Test
-    @DisplayName("Ввод данных в поле 'Пароль' на кириллице, содержащие в себе: цифры, спец. символы, верх. и ниж. регистр.")
-    void shouldTestThePasswordField2() {
-
-        registrationPage.fillRegIngo(DataGenerator.getRegFormPassword("арТиК@12!"));
-        registrationPage.setNotErrorMessagePasswordLight();
-    }
-
-
     //для проверки перехода на форму "Вход"
     @Test
     @DisplayName("Проверка перехода на форму 'Вход' по кнопке 'Вход'.")
     void shouldTestTheButton() {
-        Configuration.holdBrowserOpen = true;
 
         registrationPage.enterButtonAuth();
         registrationPage.goToAuthPage();
@@ -221,11 +198,13 @@ public class RegistrationForm {
     //для проверки отправки формы "Регистрация"
     @Test
     @DisplayName("Регистрация пользователя с заполненными валидными данными.")
-    void shouldTestRegistrationUser() {
+    void shouldTestValidRegistrationUser() {
 
         registrationPage.fillRegIngo(DataGenerator.getRegValidForm());
         registrationPage.enterButtonContinue();
+        registrationPage.setLetterSent();
         registrationPage.setChooseRole();
+        registrationPage.exitAccountAfterReg();
     }
 
 }

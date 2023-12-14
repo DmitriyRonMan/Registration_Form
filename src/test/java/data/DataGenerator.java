@@ -29,6 +29,14 @@ public class DataGenerator {
         return fakerLangEn.internet().password();
     }
 
+    public static String getPhone(String phone) {
+        return phone;
+    }
+
+    public static String getComment(String comment) {
+        return comment;
+    }
+
     public static RegInfo getRegValidForm() {
 
         return new RegInfo(getLastName(), getName(), getEmail(), getPassword());
@@ -47,7 +55,7 @@ public class DataGenerator {
     }
 
     public static AuthInfo getAuthFormValid() {
-        return new AuthInfo("dimon-9_93@mail.ru", "asdf5771A!");
+        return new AuthInfo("dimon-9_93@mail.ru", "fdsa5771A!");
     }
 
     public static AuthInfo getAuthFormNoValidEmail() {
@@ -59,11 +67,15 @@ public class DataGenerator {
     }
 
     public static AuthInfoPassword getAuthPasswordValidForm() {
-        return new AuthInfoPassword("dimon-9_93@mail.ru");
+        return new AuthInfoPassword("dmitriykolesnikov7@gmail.com");
     }
 
     public static AuthInfoPassword getAuthPasswordNotValidForm() {
         return new AuthInfoPassword("notAutorization@gmail.com");
+    }
+
+    public static ContactForm getContactFormValid() {
+        return new ContactForm(getName(), getPhone("9886473623"), getEmail(), getComment(""));
     }
 
     @Data
@@ -86,6 +98,15 @@ public class DataGenerator {
     @AllArgsConstructor
     public static class AuthInfoPassword {
         private String emailAuthPassword;
+    }
+
+    @Data
+    @AllArgsConstructor
+    public static class ContactForm {
+        private String name;
+        private String phone;
+        private String email;
+        private String comment;
     }
 
 }

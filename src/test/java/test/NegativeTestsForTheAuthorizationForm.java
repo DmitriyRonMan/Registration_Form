@@ -18,6 +18,7 @@ public class NegativeTestsForTheAuthorizationForm {
     @BeforeAll
     static void setUpAll() {
         SelenideLogger.addListener("allure", new AllureSelenide());
+        Configuration.headless = true;
     }
 
     @AfterAll

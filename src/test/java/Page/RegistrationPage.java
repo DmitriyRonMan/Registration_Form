@@ -4,30 +4,38 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import data.DataGenerator;
 
+import java.time.Duration;
+
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selectors.withText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.*;
 
 public class RegistrationPage {
 
     private SelenideElement heading = $$("h2").find(Condition.text("Регистрация"));
     private SelenideElement lastNameField = $("[name='name']");
+    private SelenideElement buttonCloseLetter = $("[type='button'].css-1ik4h6n");
+    private SelenideElement buttonDelivery = $$("p").find(Condition.text("Внутригородская доставка"));
+    private SelenideElement buttonMenu = $(".css-1khs3ah");
+    private SelenideElement buttonExitAc = $$("p").find(Condition.text("Выйти из аккаунта"));
     private SelenideElement nameField = $("[name='surname']");
     private SelenideElement emailField = $("[name='email']");
     private SelenideElement passwordField = $("[name='password']");
     private SelenideElement buttonContinue = $("[type='submit'].css-yhxv9x");
     private SelenideElement buttonEntrance = $("[type='button'].css-jq7zez");
     private SelenideElement chooseRole = $(withText("Выберите вашу роль"));
-    private SelenideElement errorMessageForTheLastNameFieldWithRuLetters = $(byText("Значение поля фамилия, может содержать только русские буквы"));
+    private SelenideElement letterSent = $(withText("Письмо отправлено!"));
+    private SelenideElement errorMessageForTheLastNameFieldWithRuLetters = $(byText("Значение поля фамилия, может содержать только русские буквы и дефис"));
     private SelenideElement errorMessageForTheLastNameFieldFromIntervalFrom1To64 = $(byText("Значение поля фамилия, должно содержать не меньше 1 буквы и не больше 64 букв"));
-    private SelenideElement errorMessageForTheNameFieldWithRuLetters = $(byText("Значение поля имя, может содержать только русские буквы"));
+    private SelenideElement errorMessageForTheNameFieldWithRuLetters = $(byText("Значение поля имя, может содержать только русские буквы и дефис"));
     private SelenideElement errorMessageForTheNameFieldFromIntervalFrom1To64 = $(byText("Значение поля имя, должно содержать не меньше 1 буквы и не больше 64 букв"));
     private SelenideElement errorMessageFormatEmail = $(byText("Значение поля email, не соответствует формату почты"));
     private SelenideElement errorMessagePasswordLight = $(byText("Недопустимый пароль. Пароль слишком простой."));
-    private SelenideElement errorMessagePasswordRepChar = $(byText("Пароль указан неверно. Имеются повторяющиеся символы"));
+    /*
+        private SelenideElement errorMessagePasswordRepChar = $(byText("Пароль указан неверно. Имеются повторяющиеся символы"));
+    */
     private SelenideElement errorMessagePasswordSpecChar = $(byText("Пароль не должен содержать символы «?», «#», «<», «>», «%», «/»"));
-    private SelenideElement errorMessagePasswordFrom7To64 = $(byText("Значение поля пароль, должно содержать не меньше 7 буквы и не больше 64 букв"));
+    private SelenideElement errorMessagePasswordFrom7To64 = $(byText("Значение поля пароль, должно содержать не меньше 7 буквы и не больше 25 букв"));
 
     public RegistrationPage() {
 
@@ -121,13 +129,13 @@ public class RegistrationPage {
         errorMessageFormatEmail.shouldHave(Condition.visible);
     }
 
-    public void setErrorMessagePasswordLight() {
+   /* public void setErrorMessagePasswordLight() {
         errorMessagePasswordLight.shouldHave(Condition.visible);
     }
 
     public void setErrorMessagePasswordRepChar() {
         errorMessagePasswordRepChar.shouldHave(Condition.visible);
-    }
+    }*/
 
     public void setErrorMessagePasswordSpecChar() {
         errorMessagePasswordSpecChar.shouldHave(Condition.visible);
@@ -139,7 +147,22 @@ public class RegistrationPage {
 
 
     public void setChooseRole() {
-        chooseRole.shouldHave(Condition.visible);
+
+        refresh();
+        chooseRole.shouldHave(Condition.visible, Duration.ofSeconds(10));
+    }
+
+    public void setLetterSent() {
+
+        letterSent.shouldHave(Condition.visible);
+        buttonCloseLetter.click();
+    }
+
+    public void exitAccountAfterReg() {
+
+        buttonDelivery.click();
+        buttonMenu.click();
+        buttonExitAc.click();
     }
 
     public void enterButtonAuth() {

@@ -18,6 +18,7 @@ public class AuthorizationTest {
     @BeforeAll
     static void setUpAll() {
         SelenideLogger.addListener("allure", new AllureSelenide());
+        Configuration.headless = true;
     }
 
     @AfterAll
@@ -39,6 +40,8 @@ public class AuthorizationTest {
         authorizationPage.fillAuthIngo(DataGenerator.getAuthFormValid());
         authorizationPage.enterButtonEntrance();
         authorizationPage.setChooseRole();
+        authorizationPage.exitAccount();
+        authorizationPage.goToMainPage();
     }
 
     @Test
